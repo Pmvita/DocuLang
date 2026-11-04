@@ -42,3 +42,5 @@ npm-debug.log*
 *.pem
 *.key
 .vercel
+.vercel
+.env*

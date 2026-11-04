@@ -2,8 +2,7 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState } from 'react'
-import { createBrowserClient } from '@/lib/supabase/client'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -11,8 +10,13 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const [supabase, setSupabase] = useState<ReturnType<typeof import('@/lib/supabase/client').createBrowserClient> | null>(null)
   const router = useRouter()
-  const supabase = createBrowserClient()
+
+  useEffect(() => {
+    const { createBrowserClient } = require('@/lib/supabase/client')
+    setSupabase(createBrowserClient())
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -20,6 +24,9 @@ export default function LoginPage() {
     setLoading(true)
 
     try {
+      if (!supabase) {
+        throw new Error('Client not ready')
+      }
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
