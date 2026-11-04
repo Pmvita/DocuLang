@@ -14,8 +14,8 @@ jest.mock('@supabase/ssr', () => ({
 
 import { createServerClient } from '@/lib/supabase/server'
 
-test('createServerClient returns typed client', () => {
-  const client = createServerClient()
+test('createServerClient returns typed client', async () => {
+  const client = await createServerClient()
   expect(client).toBeDefined()
   expect(typeof client.auth.getUser).toBe('function')
 })

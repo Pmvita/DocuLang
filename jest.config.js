@@ -9,7 +9,7 @@ module.exports = {
   },
   setupFilesAfterEnv: ['<rootDir>/tests/setup.ts'],
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.json' }],
+    '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
   },
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
 }
