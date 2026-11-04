@@ -2,10 +2,12 @@
 
 import { useChat } from '@/hooks/useChat'
 import { ChatPanel } from '@/components/ChatPanel'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
 
-export default function ChatPage({ params }: { params: { id: string } }) {
-  const { messages, sendMessage, isLoading } = useChat(params.id)
+export default function ChatPage() {
+  const params = useParams()
+  const { messages, sendMessage, isLoading } = useChat(params.id as string)
 
   return (
     <div className="h-[calc(100vh-8rem)]">

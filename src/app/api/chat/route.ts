@@ -2,11 +2,11 @@ import { NextRequest } from 'next/server'
 import { createServerClient } from '@/lib/supabase/server'
 import { searchSimilar } from '@/lib/rag/search'
 import { chat } from '@/lib/chat/chat'
-import { ChatMessage } from '@/types'
+import { ChatMessage, ChunkWithScore } from '@/types'
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createServerClient()
+    const supabase = await createServerClient()
     const {
       data: { user },
     } = await supabase.auth.getUser()
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     const lastUserMessage = [...messages].reverse().find((m) => m.role === 'user')
     const language = detectLanguage(lastUserMessage?.content || 'en')
 
-    let context = []
+    let context: ChunkWithScore[] = []
     if (documentId) {
       const query = lastUserMessage?.content || ''
       context = await searchSimilar(query, user.id, 5)

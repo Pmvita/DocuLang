@@ -1,10 +1,11 @@
-import { openai, EMBEDDING_MODEL } from '@/lib/openai'
+import { getOpenAIClient, EMBEDDING_MODEL } from '@/lib/openai'
 import { ChunkInput } from '@/types'
 
 export async function embedChunks(chunks: ChunkInput[]): Promise<number[][]> {
   if (chunks.length === 0) return []
 
   const texts = chunks.map((chunk) => chunk.content)
+  const openai = getOpenAIClient()
   const response = await openai.embeddings.create({
     model: EMBEDDING_MODEL,
     input: texts,
@@ -14,6 +15,7 @@ export async function embedChunks(chunks: ChunkInput[]): Promise<number[][]> {
 }
 
 export async function embedQuery(query: string): Promise<number[]> {
+  const openai = getOpenAIClient()
   const response = await openai.embeddings.create({
     model: EMBEDDING_MODEL,
     input: query,

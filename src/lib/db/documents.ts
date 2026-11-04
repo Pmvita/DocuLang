@@ -8,7 +8,7 @@ export async function createDocument(data: {
   pageCount: number
   language: Document['language']
 }): Promise<Document> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const { data: doc, error } = await supabase
     .from('documents')
     .insert({
@@ -26,7 +26,7 @@ export async function createDocument(data: {
 }
 
 export async function getDocuments(userId: string): Promise<Document[]> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const { data: docs, error } = await supabase
     .from('documents')
     .select('*')
@@ -38,7 +38,7 @@ export async function getDocuments(userId: string): Promise<Document[]> {
 }
 
 export async function deleteDocument(documentId: string, userId: string): Promise<void> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const { error } = await supabase
     .from('documents')
     .delete()
@@ -49,7 +49,7 @@ export async function deleteDocument(documentId: string, userId: string): Promis
 }
 
 export async function createChunks(documentId: string, chunks: ChunkInput[]): Promise<DocumentChunk[]> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const rows = chunks.map((chunk) => ({
     document_id: documentId,
     content: chunk.content,
@@ -73,7 +73,7 @@ export async function searchChunks(
   userId: string,
   k = 5
 ): Promise<Array<DocumentChunk & { similarity: number }>> {
-  const supabase = createServerClient()
+  const supabase = await createServerClient()
   const { data, error } = await supabase.rpc('search_document_chunks', {
     query_embedding: queryEmbedding,
     match_count: k,

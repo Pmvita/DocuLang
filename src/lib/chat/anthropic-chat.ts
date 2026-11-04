@@ -1,4 +1,4 @@
-import { anthropic, ANTHROPIC_CHAT_MODEL } from '@/lib/anthropic'
+import { getAnthropicClient, ANTHROPIC_CHAT_MODEL } from '@/lib/anthropic'
 import { ChatMessage, ChunkWithScore } from '@/types'
 
 export async function* streamChatAnthropic(
@@ -14,6 +14,7 @@ export async function* streamChatAnthropic(
     ? `Vous êtes un assistant IA bilingue spécialisé dans les documents d'approvisionnement du gouvernement canadien. Utilisez uniquement le contexte suivant pour répondre.\n\nContexte :\n${contextText}`
     : `You are a bilingual AI assistant specialized in Canadian government procurement documents. Use only the following context to answer.\n\nContext:\n${contextText}`
 
+  const anthropic = getAnthropicClient()
   const stream = anthropic.messages.stream({
     model: ANTHROPIC_CHAT_MODEL,
     max_tokens: 1024,

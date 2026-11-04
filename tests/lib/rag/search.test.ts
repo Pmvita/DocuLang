@@ -1,11 +1,11 @@
 jest.mock('@/lib/openai', () => ({
-  openai: {
+  getOpenAIClient: jest.fn(() => ({
     embeddings: {
       create: jest.fn(() => ({
         data: [{ embedding: new Array(1536).fill(0) }],
       })),
     },
-  },
+  })),
   EMBEDDING_MODEL: 'text-embedding-3-small',
 }))
 

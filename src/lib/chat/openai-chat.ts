@@ -1,4 +1,4 @@
-import { openai, CHAT_MODEL } from '@/lib/openai'
+import { getOpenAIClient, CHAT_MODEL } from '@/lib/openai'
 import { ChatMessage, ChunkWithScore } from '@/types'
 
 export async function* streamChatOpenAI(
@@ -14,6 +14,7 @@ export async function* streamChatOpenAI(
     ? `Vous êtes un assistant IA bilingue spécialisé dans les documents d'approvisionnement du gouvernement canadien. Utilisez uniquement le contexte suivant pour répondre.\n\nContexte :\n${contextText}`
     : `You are a bilingual AI assistant specialized in Canadian government procurement documents. Use only the following context to answer.\n\nContext:\n${contextText}`
 
+  const openai = getOpenAIClient()
   const stream = await openai.chat.completions.create({
     model: CHAT_MODEL,
     messages: [

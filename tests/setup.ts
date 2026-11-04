@@ -6,6 +6,7 @@ class MockRequest {
     this.headers = new Map(Object.entries(init?.headers || {}))
     this.body = init?.body || null
     this.url = typeof input === 'string' ? input : input.url
+    this.nextUrl = new URL(this.url)
     if (typeof init?.body === 'string') {
       try {
         this._json = JSON.parse(init.body)

@@ -10,6 +10,10 @@ package-lock.json
 # Sensitive personal docs
 docs/superpowers/
 .superpowers/
+*personal*
+*finance*
+*goals*
+*private*
 
 # Build outputs
 .next/
