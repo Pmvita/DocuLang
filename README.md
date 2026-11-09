@@ -1,4 +1,6 @@
-# DocuLang
+﻿# DocuLang
+
+**Live demo:** https://doculang.vercel.app
 
 **Bilingual AI Document Assistant for Canadian Government Procurement**
 
